@@ -57,8 +57,9 @@ export const onMessageReceived = async (
       if (isNil(functionToExecute)) return void 0;
 
       const responseEither = await functionToExecute({
-        rawMessage: messageWithoutPrefix,
-        sender: sender,
+        parsedMessageText: messageWithoutPrefix,
+        message,
+
         /*         argumentsTxt: rawMessageText,
         argumentsList: commandArguments,
         quoteTxt,

@@ -34,7 +34,7 @@ const onServerStarted = (client: Client) => {
   });
 
   // * When the user send a message
-  client.onAnyMessage(async (message) => {
+  client.onMessage(async (message) => {
     const messagesLoaded = await client.getAmountOfLoadedMessages();
 
     /** Skip the new messages if we have too much in cache to load */
@@ -44,6 +44,8 @@ const onServerStarted = (client: Client) => {
       onMessageReceived(client, message, botService);
     }
   });
+
+  /*  client.onMessageDeleted() */
 };
 
 create(launchConfig).then(onServerStarted);
