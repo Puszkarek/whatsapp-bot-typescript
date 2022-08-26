@@ -9,3 +9,7 @@ export const COMMAND_ARGS_SEPARATOR = " " as const;
  * For example, if the user wants to send two items `item one, item two`, the comma will be the regular way to split these items in a array of items
  */
 export const MESSAGE_ITEM_SEPARATOR = "," as const;
+
+// * Stickers
+export const STICKER_PACK_NAME = "lula" as const;
+export const STICKER_PACK_AUTHOR = "2020" as const;

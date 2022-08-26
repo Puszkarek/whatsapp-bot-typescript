@@ -1,8 +1,14 @@
 import { Client, ContactId, Message } from "@open-wa/wa-automate";
 import { Either, right, left } from "fp-ts/lib/Either";
-import { COMMAND_ARGS_SEPARATOR } from "../constants";
-import { Command, MessageResponse, MESSAGE_RESPONSE_TYPE } from "../interfaces";
+import { COMMAND_ARGS_SEPARATOR, STICKER_PACK_AUTHOR } from "../constants";
+import {
+  Command,
+  MessageResponse,
+  MESSAGE_RESPONSE_TYPE,
+  SUPPORTED_MEDIA_TYPE,
+} from "../interfaces";
 import { ITEM_UNION_MESSAGE } from "../messages";
+import { STICKER_PACK_NAME } from "../constants/message-handler";
 
 export const getCommandFromMessage = (
   message: string
@@ -11,7 +17,7 @@ export const getCommandFromMessage = (
 
   if (commandToExecute) {
     return right({
-      name: commandToExecute,
+      name: commandToExecute.trim(),
       arguments: args,
     });
   }
@@ -21,15 +27,14 @@ export const getCommandFromMessage = (
 
 export const sendMessage = async (
   client: Client,
-  { from, id, sender }: Message,
+  { from, id }: Message,
   response: MessageResponse
 ): Promise<void> => {
   switch (response.type) {
     case "reply":
-      console.log("reply", response.message);
       await client.reply(from, response.message, id);
       break;
-    case "replyWithPushName":
+    case "replyWithPushName": {
       const contactNames = response.contactIDs.map(async (id) => {
         const contact = await client.getContact(id);
 
@@ -46,6 +51,31 @@ export const sendMessage = async (
         id
       );
       break;
+    }
+    case "sticker": {
+      switch (response.mediaType) {
+        case "image": {
+          await client.sendImageAsSticker(from, response.media, {
+            pack: STICKER_PACK_NAME,
+            author: STICKER_PACK_AUTHOR,
+            cropPosition: "center",
+
+            keepScale: true,
+          });
+          break;
+        }
+        case "video": {
+          await client.sendMp4AsSticker(
+            from,
+            response.media,
+            { crop: false },
+            { pack: STICKER_PACK_NAME, author: STICKER_PACK_AUTHOR }
+          );
+          break;
+        }
+      }
+      break;
+    }
   }
 };
 
@@ -75,4 +105,15 @@ export const createReplyWithPushNameMessage = (
   }
 
   return left(new Error("Invalid message"));
+};
+
+export const createStickerMessage = (
+  media: Buffer,
+  mediaType: SUPPORTED_MEDIA_TYPE
+): Either<Error, MessageResponse> => {
+  return right({
+    type: MESSAGE_RESPONSE_TYPE.sticker,
+    media,
+    mediaType,
+  });
 };

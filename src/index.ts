@@ -1,3 +1,4 @@
+import { makeMessageHandler } from "./message-handler";
 import {
   create,
   Client,
@@ -5,8 +6,6 @@ import {
   AdvancedConfig,
   STATE,
 } from "@open-wa/wa-automate";
-import { onMessageReceived } from "./message-handler";
-import { generateBotService } from "./services/client";
 
 const launchConfig: AdvancedConfig | ConfigObject = {
   useChrome: true,
@@ -20,8 +19,8 @@ const launchConfig: AdvancedConfig | ConfigObject = {
 };
 
 const onServerStarted = (client: Client) => {
-  // Generate required methods
-  const botService = generateBotService();
+  // Generate message handler
+  const onMessageReceived = makeMessageHandler();
 
   console.log("[!] Server Started!");
 
@@ -40,9 +39,9 @@ const onServerStarted = (client: Client) => {
     /** Skip the new messages if we have too much in cache to load */
     if (messagesLoaded >= 100) {
       client.cutMsgCache();
-    } else {
-      onMessageReceived(client, message, botService);
     }
+
+    onMessageReceived(client, message);
   });
 
   /*  client.onMessageDeleted() */
