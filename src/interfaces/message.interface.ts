@@ -1,46 +1,46 @@
-import { ContactId, DataURL, FilePath } from "@open-wa/wa-automate";
+import { ContactId, DataURL, FilePath } from '@open-wa/wa-automate';
 
-export type SUPPORTED_MEDIA_TYPE = "animatedStick" | "image" | "video";
+export type SUPPORTED_MEDIA_TYPE = 'animatedStick' | 'image' | 'video';
 export enum MESSAGE_RESPONSE_TYPE {
-  reply = "reply",
-  replyWithPushName = "replyWithPushName",
-  sticker = "sticker",
-  image = "image",
-  youtube = "youtube",
-  mention = "mention",
+  reply = 'reply',
+  replyWithPushName = 'replyWithPushName',
+  sticker = 'sticker',
+  image = 'image',
+  youtube = 'youtube',
+  mention = 'mention',
 }
 
 export type MessageResponse =
   | {
-      type: MESSAGE_RESPONSE_TYPE.reply;
-      message: string;
+      readonly type: MESSAGE_RESPONSE_TYPE.reply;
+      readonly message: string;
     }
   | {
-      type: MESSAGE_RESPONSE_TYPE.replyWithPushName;
-      contactIDs: Array<ContactId>;
-      message: string;
+      readonly type: MESSAGE_RESPONSE_TYPE.replyWithPushName;
+      readonly contactIDs: ReadonlyArray<ContactId>;
+      readonly message: string;
     }
   | {
-      type: MESSAGE_RESPONSE_TYPE.sticker;
-      media: Buffer;
-      mediaType: SUPPORTED_MEDIA_TYPE;
+      readonly type: MESSAGE_RESPONSE_TYPE.sticker;
+      readonly media: Buffer;
+      readonly mediaType: SUPPORTED_MEDIA_TYPE;
     }
   | {
-      type: MESSAGE_RESPONSE_TYPE.image;
-      image: DataURL | FilePath;
-      filename: string;
-      caption: string;
+      readonly type: MESSAGE_RESPONSE_TYPE.image;
+      readonly image: DataURL | FilePath;
+      readonly filename: string;
+      readonly caption: string;
     }
   | {
-      type: MESSAGE_RESPONSE_TYPE.youtube;
-      link: string;
+      readonly type: MESSAGE_RESPONSE_TYPE.youtube;
+      readonly link: string;
     }
   | {
-      type: MESSAGE_RESPONSE_TYPE.mention;
-      message: string;
+      readonly type: MESSAGE_RESPONSE_TYPE.mention;
+      readonly message: string;
     };
 
 export type Command = {
-  name: string;
-  message: string;
+  readonly name: string;
+  readonly message: string;
 };

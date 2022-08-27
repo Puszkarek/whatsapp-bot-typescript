@@ -1,86 +1,104 @@
-import fs from "fs";
-import { isArray } from "lodash";
-import { COMMAND_ARGS_SEPARATOR } from "../constants";
+import { includes, isNil, replace, split, trim } from 'lodash';
+import { COMMAND_ARGS_SEPARATOR } from '~/constants';
 import {
   createReplyMessage,
   createReplyWithPushNameMessage,
   creteReplyWithMention,
+  getInsultList,
   randomInt,
-} from "../helpers";
-import { ServiceMethod } from "../interfaces";
-import { counterText, measurerText, shipText } from "../messages";
-import { NEEDS_GROUP_MESSAGE } from "../messages/common.message";
+} from '~/helpers';
+import { MessageResponse, ServiceMethod } from '~/interfaces';
+import {
+  counterText,
+  measurerText,
+  NEEDS_GROUP_MESSAGE,
+  NEEDS_TEXT_MESSAGE,
+  REGULAR_ERROR_MESSAGE,
+  shipText,
+} from '~/messages';
 
 export const generateEntertainmentService = (): {
-  [key: string]: ServiceMethod;
+  readonly [key: string]: ServiceMethod;
 } => {
   // * Generate insults list
-  const rawInsultList: unknown = JSON.parse(
-    fs.readFileSync("src/assets/texts/pt/insults.json", "utf-8")
-  );
-  const insultList = isArray(rawInsultList) ? rawInsultList : [];
+  const insultList = getInsultList();
 
   // * Return the methods
   return {
-    /** Measurer something */
-    measurer: ({ parsedMessageText }) => {
-      const mod_type = parsedMessageText.trim();
-      const mod = randomInt(100);
-
-      return createReplyMessage(measurerText(mod, mod_type));
-    },
-    /** Send random insults */
-    insults: () => {
-      return createReplyMessage(insultList[randomInt(insultList.length)]);
-    },
-    choose: ({ parsedMessageText }) => {
+    choose: ({ parsedMessageText }): MessageResponse => {
       if (parsedMessageText.length === 0) {
-        return createReplyMessage(insultList[randomInt(insultList.length)]);
+        return createReplyMessage(NEEDS_TEXT_MESSAGE);
       }
 
       /** Get the raw message and divide using a main separator if found, or a second separator */
-      const itemsToCompare = parsedMessageText.includes(",")
-        ? parsedMessageText.split(",")
-        : parsedMessageText.split(COMMAND_ARGS_SEPARATOR);
+      const itemsToCompare = includes(parsedMessageText, ',')
+        ? split(parsedMessageText, ',')
+        : split(parsedMessageText, COMMAND_ARGS_SEPARATOR);
 
       /** Get a random item from the list and send back to the user */
-      const firstWordIndex = randomInt(itemsToCompare.length);
-      return createReplyMessage(itemsToCompare[firstWordIndex].trim());
+      const randomItem = itemsToCompare[randomInt(itemsToCompare.length)];
+
+      if (isNil(randomItem)) {
+        return createReplyMessage(REGULAR_ERROR_MESSAGE);
+      }
+
+      return createReplyMessage(trim(randomItem));
     },
-    countwords: ({ parsedMessageText }) => {
+
+    countwords: ({ parsedMessageText }): MessageResponse => {
       return createReplyMessage(counterText(parsedMessageText.length));
     },
-    ship: ({ message }) => {
+
+    /** Send random insults */
+    insults: (): MessageResponse => {
+      const randomInsult = insultList[randomInt(insultList.length)];
+
+      if (isNil(randomInsult)) {
+        return createReplyMessage(REGULAR_ERROR_MESSAGE);
+      }
+
+      return createReplyMessage(randomInsult);
+    },
+    /** Measurer something */
+    measurer: ({ parsedMessageText }): MessageResponse => {
+      const moduleType = trim(parsedMessageText);
+      const moduleBase = 100;
+      const randomModule = randomInt(moduleBase);
+
+      return createReplyMessage(measurerText(randomModule, moduleType));
+    },
+    ship: ({ message }): MessageResponse => {
       if (message.isGroupMsg) {
         if (message.mentionedJidList.length > 0) {
-          return createReplyWithPushNameMessage(
-            message.mentionedJidList,
-            shipText()
-          );
+          return createReplyWithPushNameMessage(message.mentionedJidList, shipText());
         }
         const groupParticipants = message.chat.groupMetadata.participants;
-        const getRandomParticipant = () => randomInt(groupParticipants.length);
+        const getRandomParticipantID = (): number => randomInt(groupParticipants.length);
 
         // Add two participants to the list
-        const member_1 = groupParticipants[getRandomParticipant()];
-        const member_2 = groupParticipants[getRandomParticipant()];
+        const firstMemberID = groupParticipants[getRandomParticipantID()]?.id._serialized;
+        const secondMemberID = groupParticipants[getRandomParticipantID()]?.id._serialized;
 
-        return createReplyWithPushNameMessage(
-          [member_1.id._serialized, member_2.id._serialized],
-          shipText()
-        );
+        if (isNil(firstMemberID) || isNil(secondMemberID)) {
+          return createReplyMessage(REGULAR_ERROR_MESSAGE);
+        }
+        return createReplyWithPushNameMessage([firstMemberID, secondMemberID], shipText());
       }
 
       return createReplyMessage(NEEDS_GROUP_MESSAGE);
     },
-    who: ({ message }) => {
+    who: ({ message }): MessageResponse => {
       if (message.isGroupMsg) {
         const groupMembers = message.chat.groupMetadata.participants;
-        const memberID = groupMembers[
-          randomInt(groupMembers.length)
-        ].id._serialized.replace("@c.us", "");
 
-        return creteReplyWithMention("@" + memberID);
+        const rawID = groupMembers[randomInt(groupMembers.length)]?.id._serialized;
+
+        if (isNil(rawID)) {
+          return createReplyMessage(REGULAR_ERROR_MESSAGE);
+        }
+        const memberID = replace(rawID, '@c.us', '');
+
+        return creteReplyWithMention(`@${memberID}`);
       }
 
       return createReplyMessage(NEEDS_GROUP_MESSAGE);

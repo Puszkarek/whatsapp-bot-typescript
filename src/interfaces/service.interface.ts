@@ -1,18 +1,15 @@
-import { Message } from "@open-wa/wa-automate";
-import { Either } from "fp-ts/lib/Either";
-import { MessageResponse } from "./message.interface";
+import { Message } from '@open-wa/wa-automate';
 
-export type ServiceMethodProps = {
+import { MessageResponse } from './message.interface';
+
+export type ServiceMethodArguments = {
   /** The message send by the user, excluding the command word */
-  parsedMessageText: string;
+  readonly parsedMessageText: string;
 
   /** The message object from wa-automate library */
-  message: Message;
+  readonly message: Message;
 };
-export type ServiceMethod = (
-  props: ServiceMethodProps
-) => Either<Error, MessageResponse>;
 
-export type AsyncServiceMethod = (
-  props: ServiceMethodProps
-) => Promise<Either<Error, MessageResponse>>;
+export type ServiceMethod = (properties: ServiceMethodArguments) => MessageResponse;
+
+export type AsyncServiceMethod = (properties: ServiceMethodArguments) => Promise<MessageResponse>;

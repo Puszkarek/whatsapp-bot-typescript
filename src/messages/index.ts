@@ -1,3 +1,3 @@
-export * from "./entertainment.message";
-export * from "./common.message";
-export * from "./api.message";
+export * from './api.message';
+export * from './common.message';
+export * from './entertainment.message';
