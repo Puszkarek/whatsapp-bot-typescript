@@ -1,12 +1,12 @@
 import { decryptMedia } from '@open-wa/wa-automate';
-import { isArray, isNil } from 'lodash';
-import fs from 'node:fs';
+import { isNil } from 'lodash';
+import wiki from 'wikipedia';
+
 import { APP_LANGUAGE } from '~/constants';
-import { createReplyMessage, createStickerMessage, getCommandList, randomInt } from '~/helpers';
+import { createReplyMessage, createStickerMessage, getCommandList } from '~/helpers';
 import { AsyncServiceMethod, MessageResponse, ServiceMethod } from '~/interfaces';
 import dwiki from '~/libs/desciclopedia/dist';
-import { NEEDS_MEDIA_MESSAGE, REGULAR_ERROR_MESSAGE, SEARCH_ERROR_MESSAGE } from '~/messages';
-import wiki from 'wikipedia';
+import { NEEDS_MEDIA_MESSAGE, SEARCH_ERROR_MESSAGE } from '~/messages';
 
 // TODO: needs that? if no delete
 const uaOverride =
@@ -18,29 +18,11 @@ export const generateUtilsService = (): {
   // * Generate commands helper list
   const displayedCommandList = getCommandList();
 
-  // * Generate bolso quote list
-  const rawInsultList: unknown = JSON.parse(fs.readFileSync('~/assets/texts/pt/insults.json', 'utf8'));
-  const bolsoList: ReadonlyArray<{
-    readonly formattedDate: string;
-    readonly text: string;
-  }> = isArray(rawInsultList) ? rawInsultList : [];
-
   // * Set main settings
   wiki.setLang(APP_LANGUAGE);
 
   // * Return the methods
   return {
-    // TODO: move to a regional service
-    bolso: (): MessageResponse => {
-      const quote = bolsoList[randomInt(bolsoList.length)];
-
-      if (isNil(quote)) {
-        return createReplyMessage(REGULAR_ERROR_MESSAGE);
-      }
-
-      return createReplyMessage(`${quote.formattedDate}\n\n${quote.text}`);
-    },
-
     // TODO: move to a regional service
     /** Search terms on the Desciclopedia */
     dwiki: async ({ parsedMessageText }): Promise<MessageResponse> => {

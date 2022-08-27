@@ -3,15 +3,6 @@ import fs from 'node:fs';
 
 import { APP_LANGUAGE, COMMAND_PREFIX } from '~/constants';
 
-// TODO: move to a regional service
-export const getBolsoQuoteList = (): ReadonlyArray<string> => {
-  const rawInsultList: unknown = JSON.parse(fs.readFileSync(`src/assets/texts/pt/bolsonaro.json`, 'utf8'));
-  const insultList: ReadonlyArray<string> =
-    isArray(rawInsultList) && every(rawInsultList, isString) ? rawInsultList : [];
-
-  return insultList;
-};
-
 export const getInsultList = (): ReadonlyArray<string> => {
   const rawInsultList: unknown = JSON.parse(fs.readFileSync(`src/assets/texts/${APP_LANGUAGE}/insults.json`, 'utf8'));
   const insultList: ReadonlyArray<string> =

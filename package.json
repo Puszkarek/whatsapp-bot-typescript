@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "TODO: run the builded application",
+    "build": "TODO: build the application",
     "dev": "ts-node-dev -r tsconfig-paths/register  --transpile-only --respawn --ignore-watch node_modules src/index.ts",
     "test": "jest"
   },
