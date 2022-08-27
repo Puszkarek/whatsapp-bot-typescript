@@ -1,5 +1,6 @@
 /** The command to trigger the message commands */
 export const COMMAND_PREFIX = '!' as const;
+
 /** The size accept by a command name */
 export const MIN_COMMAND_NAME_LENGTH = 3 as const;
 

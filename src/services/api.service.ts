@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { isLeft } from 'fp-ts/lib/Either';
 import Kitsu from 'kitsu';
 import { isNil, map, trim } from 'lodash';
+
 import {
   ADVICE_API_URL,
   ANIME_QUOTES_API_URL,

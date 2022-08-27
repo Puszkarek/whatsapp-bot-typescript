@@ -1,4 +1,5 @@
 import { isNil, map } from 'lodash';
+
 import { IAnimeMetadata, IAnimeQuote, IMovieMetadata } from '~/interfaces';
 
 export const holidayText = (name: string, data: string): string => {

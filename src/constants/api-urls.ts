@@ -19,6 +19,3 @@ export const MOVIE_SEARCH_API_URL = 'https://api.themoviedb.org/4/search/multi' 
 export const MOVIE_DISCOVER_API_URL = 'https://api.themoviedb.org/4/discover/movie' as const;
 
 export const MOVIE_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original' as const;
-
-// TODO: find a valid API
-export const HOROSCOPE_API_URL = 'TODO' as const;

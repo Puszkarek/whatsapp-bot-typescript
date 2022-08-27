@@ -22,10 +22,11 @@ export const getCatFactsList = (): ReadonlyArray<string> => {
 };
 
 export const getCommandList = (): string => {
-  const rawCommandList: unknown = JSON.parse(fs.readFileSync('~/assets/texts/pt/help.json', 'utf8'));
+  const rawCommandList: unknown = JSON.parse(fs.readFileSync('src/assets/texts/pt/help.json', 'utf8'));
 
   if (isObject(rawCommandList)) {
     const entries = Object.entries(rawCommandList as Record<string, string>);
+
     const commandList = map(entries, ([key, description]) => {
       return `${COMMAND_PREFIX + key}\n${description}\n\n───────────────\n\n`;
     });

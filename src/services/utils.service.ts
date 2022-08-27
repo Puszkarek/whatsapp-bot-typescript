@@ -5,8 +5,9 @@ import wiki from 'wikipedia';
 import { APP_LANGUAGE } from '~/constants';
 import { createReplyMessage, createStickerMessage, getCommandList } from '~/helpers';
 import { AsyncServiceMethod, MessageResponse, ServiceMethod } from '~/interfaces';
-import dwiki from '~/libs/desciclopedia/dist';
 import { NEEDS_MEDIA_MESSAGE, SEARCH_ERROR_MESSAGE } from '~/messages';
+
+import dwiki from '../../libs/desciclopedia/dist';
 
 // TODO: needs that? if no delete
 const uaOverride =

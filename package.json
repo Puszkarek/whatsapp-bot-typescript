@@ -2,12 +2,14 @@
   "name": "bot-whats",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "TODO: run the builded application",
     "build": "TODO: build the application",
     "dev": "ts-node-dev -r tsconfig-paths/register  --transpile-only --respawn --ignore-watch node_modules src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "eslint": "eslint -c ./.eslintrc.json ./src/**/*.ts",
+    "prettier": "prettier --check ./src"
   },
   "keywords": [],
   "author": "",
