@@ -8,8 +8,12 @@
     "build": "TODO: build the application",
     "dev": "ts-node-dev -r tsconfig-paths/register  --transpile-only --respawn --ignore-watch node_modules src/index.ts",
     "test": "jest",
-    "eslint": "eslint -c ./.eslintrc.json ./src/**/*.ts",
-    "prettier": "prettier --check ./src"
+    "eslint:check": "eslint -c ./.eslintrc.json ./src/**/*.ts",
+    "eslint:format": "eslint -c ./.eslintrc.json --fix ./src/**/*.ts",
+    "prettier:check": "prettier --check ./src",
+    "prettier:format": "prettier --write ./src",
+    "lint:check": "npm run prettier:check && npm run eslint:check",
+    "lint:format": "npm run prettier:format && npm run eslint:format"
   },
   "keywords": [],
   "author": "",

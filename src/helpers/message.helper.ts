@@ -1,6 +1,7 @@
 import { Client, ContactId, DataURL, FilePath, Message } from '@open-wa/wa-automate';
 import { Either, left, right } from 'fp-ts/lib/Either';
 import { map, split, trim } from 'lodash';
+
 import { COMMAND_ARGS_SEPARATOR, STICKER_PACK_AUTHOR, STICKER_PACK_NAME } from '~/constants';
 import { Command, MESSAGE_RESPONSE_TYPE, MessageResponse, SUPPORTED_MEDIA_TYPE } from '~/interfaces';
 import { ITEM_UNION_MESSAGE } from '~/messages';
