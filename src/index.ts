@@ -33,7 +33,7 @@ const onServerStarted = (client: Client) => {
   });
 
   // * When the user send a message
-  client.onMessage(async (message) => {
+  client.onAnyMessage(async (message) => {
     const messagesLoaded = await client.getAmountOfLoadedMessages();
 
     /** Skip the new messages if we have too much in cache to load */

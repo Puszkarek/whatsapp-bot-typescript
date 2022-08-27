@@ -30,7 +30,7 @@ export const makeMessageHandler = () => {
       rawMessageText.length > MIN_COMMAND_NAME_LENGTH
     ) {
       //formatted log
-      const messageWithoutPrefix = rawMessageText.substring(1);
+      const messageWithoutPrefix = rawMessageText.substring(1).trim();
       console.log(
         green(sender.pushname + ":"),
         yellow('"' + rawMessageText + '"'),
@@ -50,7 +50,7 @@ export const makeMessageHandler = () => {
         if (isNil(functionToExecute)) return void 0;
 
         const responseEither = await functionToExecute({
-          parsedMessageText: messageWithoutPrefix,
+          parsedMessageText: command.message,
           message,
         });
 

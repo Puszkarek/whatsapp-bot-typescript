@@ -21,9 +21,12 @@
   },
   "dependencies": {
     "@open-wa/wa-automate": "^4.44.5",
+    "axios": "^0.27.2",
     "colorette": "^2.0.19",
     "date-fns": "^2.29.2",
+    "dotenv": "^16.0.1",
     "fp-ts": "^2.12.2",
+    "kitsu": "^10.0.2",
     "lodash": "^4.17.21",
     "wikipedia": "^1.1.9"
   }

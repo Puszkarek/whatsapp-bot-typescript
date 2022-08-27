@@ -1,23 +1,19 @@
 {
-  "bill": "seja como o bill",
   "animequote": "procure frases de animes\nex=shingeki no kyojin",
   "holidays": "veja os dias especiais",
   "music": "gêneros de musica aleatórios",
   "advice": "avisos aleatórios",
-  "horoscope": "procura o horoscopo do dia\nex= Libra",
   "nasa": "foto do dia da Nasa",
   "movie": "procura filmes\nex = Castlevania",
-  "cats": "fatos aleatórios sobre gatos",
+  "cat": "fatos aleatórios sobre gatos",
 
-  "vagalume": "procura letras de musicas\nex = artista ,musica , tradução (opcional)",
-  "randomquote": "lista de frases aleatórias",
   "quote": "procure uma frase\nex = karl marx",
 
   "wiki": "procure na wikipedia\nex = batman",
   "dwiki": "procure na desciclopédia",
   "anime": "procure animes",
 
-  "tts": "crie audios a partir de textos\nex = en diga isso",
+  "tts": "crie audios a partir de textos\nex = en diga isso (DESATIVADO)",
 
   "ship": "escolha casais aleatórios",
   "measurer": "medir alguma coisa em porcentagem\nex = anarcoprimitivista",

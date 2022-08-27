@@ -10,6 +10,7 @@ import dwiki from "../libs/desciclopedia/dist";
 import fs from "fs";
 import { randomInt } from "../helpers/number.helper";
 import { COMMAND_PREFIX } from "../constants/message-handler";
+import { APP_LANGUAGE } from "../constants/settings";
 
 // TODO: needs that? if no delete
 const uaOverride =
@@ -64,7 +65,10 @@ export const generateUtilsService = (): {
     /** Search terms on the Wikipedia */
     wiki: async ({ parsedMessageText }) => {
       try {
-        const searchResults = await wiki.search(parsedMessageText);
+        await wiki.setLang(APP_LANGUAGE);
+        const searchResults = await wiki.search(parsedMessageText, {
+          limit: 1,
+        });
 
         const page = await wiki.page(searchResults.results[0].pageid);
         const content = await page.content({

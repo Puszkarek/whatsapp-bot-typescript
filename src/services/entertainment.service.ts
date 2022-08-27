@@ -4,6 +4,7 @@ import { COMMAND_ARGS_SEPARATOR } from "../constants";
 import {
   createReplyMessage,
   createReplyWithPushNameMessage,
+  creteReplyWithMention,
   randomInt,
 } from "../helpers";
 import { ServiceMethod } from "../interfaces";
@@ -68,6 +69,18 @@ export const generateEntertainmentService = (): {
           [member_1.id._serialized, member_2.id._serialized],
           shipText()
         );
+      }
+
+      return createReplyMessage(NEEDS_GROUP_MESSAGE);
+    },
+    who: ({ message }) => {
+      if (message.isGroupMsg) {
+        const groupMembers = message.chat.groupMetadata.participants;
+        const memberID = groupMembers[
+          randomInt(groupMembers.length)
+        ].id._serialized.replace("@c.us", "");
+
+        return creteReplyWithMention("@" + memberID);
       }
 
       return createReplyMessage(NEEDS_GROUP_MESSAGE);
