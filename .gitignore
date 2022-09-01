@@ -3,3 +3,4 @@ node_modules
 dist
 _IGNORE_puszkarek
 .node-persist
+*.data.json

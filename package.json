@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "browserslist": "defaults",
   "scripts": {
-    "start": "TODO: run the builded application",
-    "build": "TODO: build the application",
+    "start": "node ./dist/index.js",
+    "build": "swc ./src -d dist --copy-files --config-file .swcrc",
     "dev": "ts-node-dev -r tsconfig-paths/register  --transpile-only --respawn --ignore-watch node_modules src/index.ts",
     "test": "jest",
     "eslint:check": "eslint -c ./.eslintrc.json ./src/**/*.ts",
@@ -19,7 +20,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@swc/core": "^1.2.242",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.244",
     "@swc/jest": "^0.2.22",
     "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.13",
