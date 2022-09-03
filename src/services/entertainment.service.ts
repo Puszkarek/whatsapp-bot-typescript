@@ -8,7 +8,7 @@ import {
   getInsultList,
   randomInt,
 } from '~/helpers';
-import { MessageResponse, ServiceMethod } from '~/interfaces';
+import { EntertainmentService, MessageResponse } from '~/interfaces';
 import {
   counterText,
   measurerText,
@@ -18,9 +18,7 @@ import {
   shipText,
 } from '~/messages';
 
-export const generateEntertainmentService = (): {
-  readonly [key: string]: ServiceMethod;
-} => {
+export const generateEntertainmentService = (): EntertainmentService => {
   // * Generate insults list
   const insultList = getInsultList();
 

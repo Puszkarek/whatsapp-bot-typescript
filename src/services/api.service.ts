@@ -26,7 +26,7 @@ import {
 } from '~/helpers';
 import { getAnimeMetadata } from '~/helpers/get-anime-metadata';
 import {
-  AsyncServiceMethod,
+  APIsService,
   IAdvice,
   IAnimeQuote,
   ICatImage,
@@ -45,9 +45,7 @@ import {
 } from '~/messages';
 
 /** Service that uses external apis to send messages */
-export const generateAPIsService = (): {
-  readonly [key: string]: AsyncServiceMethod;
-} => {
+export const generateAPIsService = (): APIsService => {
   // * Cat facts
   const catFacts = getCatFactsList();
 

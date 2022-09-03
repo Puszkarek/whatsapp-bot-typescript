@@ -13,3 +13,36 @@ export type ServiceMethodArguments = {
 export type ServiceMethod = (properties: ServiceMethodArguments) => MessageResponse;
 
 export type AsyncServiceMethod = (properties: ServiceMethodArguments) => Promise<MessageResponse>;
+
+// * Services
+export type UtilsService = {
+  readonly help: ServiceMethod;
+  readonly ping: ServiceMethod;
+  readonly sticker: AsyncServiceMethod;
+  readonly wiki: AsyncServiceMethod;
+};
+
+export type EntertainmentService = {
+  readonly choose: ServiceMethod;
+  readonly countwords: ServiceMethod;
+  readonly insults: ServiceMethod;
+  readonly measurer: ServiceMethod;
+  readonly ship: ServiceMethod;
+  readonly who: ServiceMethod;
+};
+
+export type APIsService = {
+  readonly advice: AsyncServiceMethod;
+  readonly anime: AsyncServiceMethod;
+  readonly animequote: AsyncServiceMethod;
+  readonly cat: AsyncServiceMethod;
+  readonly holidays: AsyncServiceMethod;
+  readonly movie: AsyncServiceMethod;
+  readonly music: AsyncServiceMethod;
+  readonly nasa: AsyncServiceMethod;
+  readonly quote: AsyncServiceMethod;
+};
+
+export type BotService = {
+  readonly [key: string]: ServiceMethod | AsyncServiceMethod;
+};

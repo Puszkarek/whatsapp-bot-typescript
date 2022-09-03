@@ -4,16 +4,14 @@ import wiki from 'wikipedia';
 
 import { APP_LANGUAGE } from '~/constants';
 import { createReplyMessage, createStickerMessage, getCommandList } from '~/helpers';
-import { AsyncServiceMethod, MessageResponse, ServiceMethod } from '~/interfaces';
+import { MessageResponse, UtilsService } from '~/interfaces';
 import { NEEDS_MEDIA_MESSAGE, SEARCH_ERROR_MESSAGE } from '~/messages';
 
 // TODO: needs that? if no delete
 const uaOverride =
   'WhatsApp/2.16.352 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15';
 
-export const generateUtilsService = (): {
-  readonly [key: string]: AsyncServiceMethod | ServiceMethod;
-} => {
+export const generateUtilsService = (): UtilsService => {
   // * Generate commands helper list
   const displayedCommandList = getCommandList();
 

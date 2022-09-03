@@ -300,7 +300,10 @@
     {
       "files": ["*.spec.ts"],
       "plugins": [],
-      "rules": {}
+      "rules": {
+        "functional/no-let": "off",
+        "@typescript-eslint/init-declarations": "off"
+      }
     }
   ]
 }
