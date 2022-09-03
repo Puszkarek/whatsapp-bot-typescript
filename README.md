@@ -31,7 +31,6 @@ after running it you need to scan the qr
 
 some functions will need registration in some apis, here is the link to all of them:
 
-- [Cat api](https://thecatapi.com/ 'cat api')
 - [Movie](https://www.themoviedb.org/documentation/api 'movie database api')
 - [Nasa](https://api.nasa.gov/ 'nasa api')
 
