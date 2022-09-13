@@ -13,7 +13,6 @@ export const makeMessageHandler = (): ((client: Client, message: Message) => Pro
   const botService = generateBotService();
 
   return async (client: Client, message: Message): Promise<void> => {
-    console.log('message', message);
     //  Get the message metadata
     const { sender, isGroupMsg, chat, caption, body } = message;
 
